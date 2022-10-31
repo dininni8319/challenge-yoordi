@@ -2,8 +2,17 @@ import { isTemplateSpan, JsxEmit } from "typescript";
 import { ICard, IOrder, getTotalPrice, formatDate } from "../utilities";
 import { AppCss } from "../../App.css";
 import { App } from "../../App";
-const Orders = ({ orders }:{ orders:IOrder[] } ):JSX.Element => {
+import { useState } from "react";
 
+const Orders = ({ orders, setOrders }:{ orders:IOrder[] ,setOrders: () => IOrder[]} ):JSX.Element => {
+   const [ done, setDate ] = useState(false)
+   const [ doneOrders, setDoneOrders]= useState<IOrder[]>()
+
+   const handleSetdone = (id:number) => {
+      let done = orders.filter(el => el._id !== id)
+      // setDoneOrders(done.concat.doneOrders)
+      setDate(true);
+   }
    return (
       <div className={AppCss.container}>
          
@@ -28,7 +37,8 @@ const Orders = ({ orders }:{ orders:IOrder[] } ):JSX.Element => {
                      </ul>
                   )
                })}
-              </ul>;
+              <button onClick={() => handleSetdone(item._id)}></button>
+              </ul>
         })}
       </div>
    )
