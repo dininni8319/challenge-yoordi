@@ -3,14 +3,7 @@ import { ICard } from "./components/utilities";
 import { AppCss } from "./App.css";
 import fetch from "cross-fetch";
 import Orders from "./components/Orders";
-
-export interface IOrder {
-    map(arg0: (item: IOrder) => JSX.Element): JSX.Element;
-    refNumber: number,
-    date: Date,
-    card: ICard[],
-    _id: number,
-}
+import { IOrder } from "./components/utilities";
 
 export const App = () => {
     const [orders, setOrders] = useState<IOrder[]>([]);
@@ -20,7 +13,6 @@ export const App = () => {
         const getApi = async () => {
             const result = await fetch("http://localhost:4000/orders/");
             const resJson = await result.json();
-            
             setOrders(resJson);
         };
 
@@ -29,7 +21,8 @@ export const App = () => {
 
    
     return (
-        <div className={AppCss.container}>
+        <div>
+
             <Orders orders={orders}/>
         </div>
     );
