@@ -4,41 +4,60 @@ import { AppCss } from "../../App.css";
 import { App } from "../../App";
 import { useState } from "react";
 
-const Orders = ({ orders, setOrders }:{ orders:IOrder[] ,setOrders: () => IOrder[]} ):JSX.Element => {
+const Orders = ({ orders}:{ orders:IOrder[]} ):JSX.Element => {
    const [ done, setDate ] = useState(false)
-   const [ doneOrders, setDoneOrders]= useState<IOrder[]>()
+   const [ doneOrders, setDoneOrders]= useState<IOrder[]>([])
+   const [ orderDetail, setOrderDetail ] = useState(false);
+   const [ currentId, setCurrentId ] = useState(0);
 
    const handleSetdone = (id:number) => {
       let done = orders.filter(el => el._id !== id)
-      // setDoneOrders(done.concat.doneOrders)
+      setDoneOrders([...done])
       setDate(true);
+   }
+
+   const handleDetailOrder = (id: number) => {
+      if (currentId === id) {
+         setOrderDetail(prev => !prev);
+      }
    }
    return (
       <div className={AppCss.container}>
          
          {
-           orders?.sort((a:IOrder, b: IOrder) => a.date - b.date)
+            orders?.sort((a:IOrder, b: IOrder) => a.date - b.date)
            .reverse()
            .map((item: IOrder) => {
-            return <ul key={`order${item._id}`} className={AppCss.card}>
-              <li>
-                <span>{item.refNumber}</span>
-              </li>
-                 <span>{formatDate(item.date)}</span>
-                 <li>
-                <span>Total Price: {getTotalPrice(item.card)}</span>
-              </li>
-               {item.card.map(el => {
+              return ( <ul key={`order${item._id}`} className={AppCss.card}>
+                  <li className={AppCss.cardSpan}>
+                     <span>{item.refNumber}</span><span>{formatDate(item.date)}</span>
+                  </li>
+                     
+                  <li className={AppCss.cardTitle}>
+                     <span>Total Price: {getTotalPrice(item.card)}</span>
+                  </li>
+               {orderDetail && currentId === item._id && item.card.map(el => {
                   return (
                      <ul key={el.id} className={AppCss.ul}>
                         <li>Name: {el.name}</li>
-                        <li>Price{el.price}</li>
-                        <li></li>
+                        <li>Price: {el.price}</li>
                      </ul>
                   )
                })}
-              <button onClick={() => handleSetdone(item._id)}></button>
+               <span onClick={() => {
+                  handleDetailOrder(item._id)
+                  setCurrentId(item._id)
+               }
+            
+               } className={AppCss.cardSpan}>{
+                  orderDetail ? "hide detail...": '...Show order Detail'}
+               </span>
+               <button onClick={() => {
+                  handleSetdone(item._id)
+               }}>Done</button>
               </ul>
+
+            )
         })}
       </div>
    )
