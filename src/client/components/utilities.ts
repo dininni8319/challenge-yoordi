@@ -1,7 +1,14 @@
+export type OrdersType = {
+  id: number,
+  name: string,
+  price: number,
+}
+
 export interface ICard {
   id: number,
   name: string,
-  price: number
+  price: number,
+  options: OrdersType[]
 }
 
 export interface IOrder {
@@ -11,7 +18,6 @@ export interface IOrder {
   card: ICard[],
   _id: number,
 }
-
 
 export function getTotalPrice(obj: ICard[]): number{
    let total = 0

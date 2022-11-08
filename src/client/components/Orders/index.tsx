@@ -1,5 +1,5 @@
 import { isTemplateSpan, JsxEmit } from "typescript";
-import { ICard, IOrder, getTotalPrice, formatDate } from "../utilities";
+import { ICard, IOrder,OrdersType, getTotalPrice, formatDate } from "../utilities";
 import { AppCss } from "../../App.css";
 import { App } from "../../App";
 import { useState } from "react";
@@ -23,7 +23,6 @@ const Orders = ({ orders}:{ orders:IOrder[]} ):JSX.Element => {
    }
    return (
       <div className={AppCss.container}>
-         
          {
             orders?.sort((a:IOrder, b: IOrder) => a.date - b.date)
            .reverse()
@@ -37,12 +36,26 @@ const Orders = ({ orders}:{ orders:IOrder[]} ):JSX.Element => {
                      <li className={AppCss.cardTitle}>
                         <span>Amount ${getTotalPrice(item.card)}</span>
                      </li>
-               {orderDetail && currentId === item._id && item.card.map(el => {
+               { orderDetail &&
+                 currentId === item._id 
+                 && item.card.map((el:ICard) => {
                   return (
-                     <ul key={el.id} className={AppCss.ul}>
+                     <>
+                     <div className={AppCss.ul}>
                         <li> {el.name}</li>
                         <li>${el.price}</li>
-                     </ul>
+                     </div>
+                         {
+                           el.options?.map((opt: OrdersType)=> {
+                              return ( 
+                                 <ul key={opt.id} className={AppCss.options}> 
+                                   <li>{opt.name}</li> 
+                                   <li>${opt.price}</li> 
+                                 </ul>
+                              )
+                           })
+                        }
+                     </>
                   )
                })}
                <span onClick={() => {
@@ -57,7 +70,6 @@ const Orders = ({ orders}:{ orders:IOrder[]} ):JSX.Element => {
                   handleSetdone(item._id)
                }}>Done</button>
               </ul>
-
             )
         })}
       </div>

@@ -4,11 +4,12 @@ import { AppCss, colorVariant, localVarStyle } from "./App.css";
 import fetch from "cross-fetch";
 import Orders from "./components/Orders";
 import { IOrder } from "./components/utilities";
-import { light } from "./vars.css";
 
 export const App = () => {
     const [ orders, setOrders ] = useState<IOrder[]>([]);
 
+    console.log(orders);
+    
     useEffect(() => {
         const getApi = async () => {
             const result = await fetch("http://localhost:4000/orders/");
