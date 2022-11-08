@@ -4,12 +4,25 @@ import { AppCss, colorVariant, localVarStyle } from "./App.css";
 import fetch from "cross-fetch";
 import Orders from "./components/Orders";
 import { IOrder } from "./components/utilities";
+import { type } from "os";
+import DoneOrders from './components/DoneOrders/index';
 
 export const App = () => {
+    const [ doneOrders, setDoneOrders]= useState<IOrder[]>([])
     const [ orders, setOrders ] = useState<IOrder[]>([]);
-
-    console.log(orders);
+    const [ show, setShow ] = useState(false);
+    console.log(doneOrders, 'done orders');
     
+    const handleDoneOrders = (id:number):any => {
+        let done = orders.filter(el => el._id === id);
+        let newOrders = orders.filter(el => el._id !== id);
+        
+        setDoneOrders((prev:any) => {
+          return [...done, ...prev]
+        })
+        setOrders(prev => [...newOrders])
+    }
+
     useEffect(() => {
         const getApi = async () => {
             const result = await fetch("http://localhost:4000/orders/");
@@ -22,9 +35,12 @@ export const App = () => {
 
     return (
         <div className={AppCss.background}>
-         
+            <button onClick={() => setShow(prev => !prev)}>{show ? 'Done Orders': 'Orders'}</button>
+            { 
+                show ? <DoneOrders doneOrders={doneOrders} show={show} /> 
+                : <Orders orders={orders} handleDoneOrders={handleDoneOrders} show={show}/>
+            }  
            {/* <StyledComponentProps color="secondary"></StyledComponentProps> */}
-            <Orders orders={orders} />
         </div>
     );
 };

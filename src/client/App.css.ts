@@ -16,6 +16,7 @@ export namespace AppCss {
         padding: '20px 5px',
         zIndex: '50',
         width: '100vw',
+        minHeight: '100vh',
         '@media': {
             'screen and (max-width: 768px)': {
                 gridTemplateColumns:'1fr',
@@ -82,11 +83,19 @@ export namespace AppCss {
        justifyContent: 'space-between',
        fontSize: '14px',
        listStyle: 'none',
-       padding: '1px 3px',
+       padding: '1px 5px',
        color:'#495057',
        borderBottom: '1px solid #d3d3d3',
     });
-     // Create local variables
+
+    export const btn = style({
+        margin:'5px 0',
+        padding: '3px 10px',
+        borderRadius: '30px',
+        color: 'gray',
+        background: 'transparent',
+        border: '1px solid #3c096c',
+    });
 }
 
 const testVar = createVar();

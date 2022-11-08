@@ -23,6 +23,14 @@ app.get("/orders/", (req: any, result: any) => {
     });
 });
 
+app.post("/orders/:id", (req: any, result: any) => {
+    let { id } = req.param; 
+
+    orderCollection.find({ date: { $lt: Date.now() } }, (err: any, res: any) => {
+        res.toArray((err2: any, res2: any) => result.send(res2));
+    });
+});
+
 let index = 0;
 const setupDb = () => {
     // Create Mock Data

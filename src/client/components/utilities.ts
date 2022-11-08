@@ -19,12 +19,15 @@ export interface IOrder {
   _id: number,
 }
 
-export function getTotalPrice(obj: ICard[]): number{
+export function getTotalPrice(obj: ICard[]): string{
    let total = 0
    for (const item of obj) {
-      total += item.price
+      total += item.price;
+      for (const option of item.options) {
+        total += option.price;
+      }
    }
-   return total;
+   return total.toFixed(2);
 }
 
 export function formatDate(date: number): string{
@@ -35,10 +38,8 @@ export function formatDate(date: number): string{
   let day = time.getDay() + 1;
   let month = time.getMonth() + 1;
   let year = time.getFullYear()
-  let hours = time.getHours();
 
-  let minutes = time.getMinutes();
-  return ` ${day < 10 ? "0" + day: day} ${month < 10 ? "0" + month : month
-  } ${year}`;
+  return ` ${day < 10 ? "0" + day: day}.${month < 10 ? "0" + month : month
+  }.${year}`;
 }
 

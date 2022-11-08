@@ -4,17 +4,10 @@ import { AppCss } from "../../App.css";
 import { App } from "../../App";
 import { useState } from "react";
 
-const Orders = ({ orders}:{ orders:IOrder[]} ):JSX.Element => {
-   const [ done, setDate ] = useState(false)
+const Orders = ({ orders, handleDoneOrders, show }:{ orders:IOrder[], handleDoneOrders: any, show: boolean}):JSX.Element => {
    const [ doneOrders, setDoneOrders]= useState<IOrder[]>([])
    const [ orderDetail, setOrderDetail ] = useState(false);
    const [ currentId, setCurrentId ] = useState(0);
-
-   const handleSetdone = (id:number) => {
-      let done = orders.filter(el => el._id !== id)
-      setDoneOrders([...done])
-      setDate(true);
-   }
 
    const handleDetailOrder = (id: number) => {
       if (currentId === id) {
@@ -28,7 +21,7 @@ const Orders = ({ orders}:{ orders:IOrder[]} ):JSX.Element => {
            .reverse()
            .map((item: IOrder) => {
               return ( 
-                  <ul key={`order${item._id}`} className={AppCss.card}>
+                  <ul key={`order${item._id}`} className={AppCss.card} style={{border:`2px solid ${show ? '#188d20' : '#f94144'}`}}>
                      <li className={AppCss.cardSpan}>
                         <span>{item.refNumber}</span><span>{formatDate(item.date)}</span>
                      </li>
@@ -66,9 +59,7 @@ const Orders = ({ orders}:{ orders:IOrder[]} ):JSX.Element => {
                } className={AppCss.detailSpan}>{
                   orderDetail && currentId === item._id ? "hide detail...": '...Show order details'}
                </span>
-               <button onClick={() => {
-                  handleSetdone(item._id)
-               }}>Done</button>
+               <button className={AppCss.btn} onClick={() => handleDoneOrders(item._id)}>To be completed</button>
               </ul>
             )
         })}
