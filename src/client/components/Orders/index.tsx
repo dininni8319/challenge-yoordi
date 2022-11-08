@@ -28,19 +28,20 @@ const Orders = ({ orders}:{ orders:IOrder[]} ):JSX.Element => {
             orders?.sort((a:IOrder, b: IOrder) => a.date - b.date)
            .reverse()
            .map((item: IOrder) => {
-              return ( <ul key={`order${item._id}`} className={AppCss.card}>
-                  <li className={AppCss.cardSpan}>
-                     <span>{item.refNumber}</span><span>{formatDate(item.date)}</span>
-                  </li>
-                     
-                  <li className={AppCss.cardTitle}>
-                     <span>Total Price: {getTotalPrice(item.card)}</span>
-                  </li>
+              return ( 
+                  <ul key={`order${item._id}`} className={AppCss.card}>
+                     <li className={AppCss.cardSpan}>
+                        <span>{item.refNumber}</span><span>{formatDate(item.date)}</span>
+                     </li>
+                        
+                     <li className={AppCss.cardTitle}>
+                        <span>Amount ${getTotalPrice(item.card)}</span>
+                     </li>
                {orderDetail && currentId === item._id && item.card.map(el => {
                   return (
                      <ul key={el.id} className={AppCss.ul}>
-                        <li>Name: {el.name}</li>
-                        <li>Price: {el.price}</li>
+                        <li> {el.name}</li>
+                        <li>${el.price}</li>
                      </ul>
                   )
                })}
@@ -49,8 +50,8 @@ const Orders = ({ orders}:{ orders:IOrder[]} ):JSX.Element => {
                   setCurrentId(item._id)
                }
             
-               } className={AppCss.cardSpan}>{
-                  orderDetail ? "hide detail...": '...Show order Detail'}
+               } className={AppCss.detailSpan}>{
+                  orderDetail && currentId === item._id ? "hide detail...": '...Show order details'}
                </span>
                <button onClick={() => {
                   handleSetdone(item._id)
