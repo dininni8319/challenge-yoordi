@@ -52,26 +52,25 @@ app.get("/orders/", function (req, result) {
     });
 });
 app.use(express.urlencoded());
-app.get('/', function (req, res) {
-    return res.send(function () { return 'helllo world'; });
+app.use(express.json());
+app.post('/orders', function (req, res) { return res.send('helllo world'); });
+app.post("/api/orders/", function (req, res) {
+    res.send('hello from the res');
+    // let { id } = req.body; 
+    // let { orderStatus } = req.body;    
+    // result.send({msg: 'success'})
+    // console.log(orderStatus, 'testing the completed');
+    // orderCollection.updateOne({_id: id},{$set:{complete: orderStatus }}, (err: any, res: any) => {
+    // let responseObject = {err: null, data: null, code: 0}
+    // if (err) {
+    //     responseObject.err = err;
+    //     responseObject.data = null;
+    //     responseObject.code = 422; 
+    //     res.json(responseObject);
+    // }
+    //   res.json(responseObject);
+    // });
 });
-// app.post("/api/orders/",  (req: any, res: any) => {
-//     return res.send('hello from the res')
-// let { id } = req.body; 
-// let { orderStatus } = req.body;    
-// result.send({msg: 'success'})
-// console.log(orderStatus, 'testing the completed');
-// orderCollection.updateOne({_id: id},{$set:{complete: orderStatus }}, (err: any, res: any) => {
-// let responseObject = {err: null, data: null, code: 0}
-// if (err) {
-//     responseObject.err = err;
-//     responseObject.data = null;
-//     responseObject.code = 422; 
-//     res.json(responseObject);
-// }
-//   res.json(responseObject);
-// });
-// });
 var index = 0;
 var setupDb = function () {
     // Create Mock Data

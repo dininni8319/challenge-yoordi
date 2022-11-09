@@ -18,14 +18,12 @@ app.get("/orders/", (req: any, result: any) => {
     });
 });
 
-app.use(express.urlencoded())
+app.use(express.urlencoded());
+app.use(express.json());
+app.post('/orders', (req: any, res: any) =>  res.send('helllo world'))
 
-app.get('/', (req: any, res: any) => {
-    return res.send(() => 'helllo world');
-  });
-
-// app.post("/api/orders/",  (req: any, res: any) => {
-//     return res.send('hello from the res')
+app.post("/api/orders/",  (req: any, res: any) => {
+    res.send('hello from the res')
      
      
     // let { id } = req.body; 
@@ -43,8 +41,7 @@ app.get('/', (req: any, res: any) => {
     // }
     //   res.json(responseObject);
     // });
-// });
-
+});
 
 let index = 0;
 const setupDb = () => {

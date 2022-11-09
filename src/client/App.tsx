@@ -3,7 +3,7 @@ import { ICard } from "./components/utilities";
 import { AppCss, colorVariant, localVarStyle } from "./App.css";
 import fetch from "cross-fetch";
 import Orders from "./components/Orders";
-import { IOrder } from "./components/utilities";
+import { IOrder, formatNumber } from "./components/utilities";
 import { type } from "os";
 import DoneOrders from './components/DoneOrders/index';
 
@@ -11,7 +11,6 @@ export const App = () => {
     const [ doneOrders, setDoneOrders]= useState<IOrder[]>([])
     const [ orders, setOrders ] = useState<IOrder[]>([]);
     const [ show, setShow ] = useState(false);
-  
     
     const handleDoneOrders = (id:number):any => {
         let done = orders.filter(el => el._id === id);
@@ -32,6 +31,7 @@ export const App = () => {
 
         getApi();
     }, []);
+
 
     return (
         <div className={AppCss.background}>

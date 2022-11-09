@@ -19,14 +19,21 @@ export interface IOrder {
   _id: number,
 }
 
+export function formatNumber(num: number) {
+  return Number(new Intl
+    .NumberFormat('en-IN', {maximumSignificantDigits:2})
+    .format(num))
+};
+
 export function getTotalPrice(obj: ICard[]): string{
-   let total = 0
-   for (const item of obj) {
-      total += item.price;
-      for (const option of item.options) {
-        total += option.price;
-      }
-   }
+
+  let total = formatNumber(0) 
+  for (const item of obj) {
+    total += formatNumber(item.price);
+    for (const option of item.options) {
+      total += formatNumber(option.price);
+    }
+  }
    return total.toFixed(2);
 }
 
