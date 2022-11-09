@@ -5,11 +5,12 @@ var randomIntFromInterval = function (min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 };
 exports.randomIntFromInterval = randomIntFromInterval;
-var createExampleOrder = function (index, now) {
+var createExampleOrder = function (index, now, complete) {
     return {
         refNumber: 1000 + index,
         date: now ? Date.now() : Date.now() - (0, exports.randomIntFromInterval)(1000000, 100000000),
-        card: createRandomProducts()
+        card: createRandomProducts(),
+        complete: false
     };
 };
 exports.createExampleOrder = createExampleOrder;

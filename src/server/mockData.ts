@@ -2,11 +2,12 @@ export const randomIntFromInterval = (min: any, max: any) => {
     return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
-export const createExampleOrder = (index: number, now: boolean) => {
+export const createExampleOrder = (index: number, now: boolean, complete: boolean) => {
     return {
         refNumber: 1000 + index,
         date: now ? Date.now() : Date.now() - randomIntFromInterval(1000000, 100000000),
         card: createRandomProducts(),
+        complete: false,
     };
 };
 

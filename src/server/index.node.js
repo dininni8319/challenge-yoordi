@@ -46,20 +46,37 @@ app.use(cors());
 var Tingodb = require("tingodb")({ memStore: true }).Db;
 var db = new Tingodb("./db", {});
 var orderCollection = db.collection("orders");
-/** Setup Express */
-app.listen(port, function () {
-    console.log("App listening on port ".concat(port));
-});
 app.get("/orders/", function (req, result) {
     orderCollection.find({ date: { $lt: Date.now() } }, function (err, res) {
         res.toArray(function (err2, res2) { return result.send(res2); });
     });
 });
+app.use(express.urlencoded());
+app.get('/', function (req, res) {
+    return res.send(function () { return 'helllo world'; });
+});
+// app.post("/api/orders/",  (req: any, res: any) => {
+//     return res.send('hello from the res')
+// let { id } = req.body; 
+// let { orderStatus } = req.body;    
+// result.send({msg: 'success'})
+// console.log(orderStatus, 'testing the completed');
+// orderCollection.updateOne({_id: id},{$set:{complete: orderStatus }}, (err: any, res: any) => {
+// let responseObject = {err: null, data: null, code: 0}
+// if (err) {
+//     responseObject.err = err;
+//     responseObject.data = null;
+//     responseObject.code = 422; 
+//     res.json(responseObject);
+// }
+//   res.json(responseObject);
+// });
+// });
 var index = 0;
 var setupDb = function () {
     // Create Mock Data
     for (index; index < 100; index++) {
-        orderCollection.insert((0, mockData_1.createExampleOrder)(index, false));
+        orderCollection.insert((0, mockData_1.createExampleOrder)(index, false, false));
     }
 };
 var start = function () { return __awaiter(void 0, void 0, void 0, function () {
@@ -67,10 +84,14 @@ var start = function () { return __awaiter(void 0, void 0, void 0, function () {
         setupDb();
         // Create Orders after 1.3 Sec
         setInterval(function () {
-            orderCollection.insert((0, mockData_1.createExampleOrder)(index, true));
+            orderCollection.insert((0, mockData_1.createExampleOrder)(index, true, false));
             index++;
         }, 13000);
         return [2 /*return*/];
     });
 }); };
 start();
+/** Setup Express */
+app.listen(port, function () {
+    console.log("App listening on port ".concat(port));
+});

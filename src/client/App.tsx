@@ -11,7 +11,7 @@ export const App = () => {
     const [ doneOrders, setDoneOrders]= useState<IOrder[]>([])
     const [ orders, setOrders ] = useState<IOrder[]>([]);
     const [ show, setShow ] = useState(false);
-    console.log(doneOrders, 'done orders');
+  
     
     const handleDoneOrders = (id:number):any => {
         let done = orders.filter(el => el._id === id);

@@ -5,7 +5,6 @@ import { App } from "../../App";
 import { useState } from "react";
 
 const Orders = ({ orders, handleDoneOrders, show }:{ orders:IOrder[], handleDoneOrders: any, show: boolean}):JSX.Element => {
-   const [ doneOrders, setDoneOrders]= useState<IOrder[]>([])
    const [ orderDetail, setOrderDetail ] = useState(false);
    const [ currentId, setCurrentId ] = useState(0);
 
@@ -21,7 +20,10 @@ const Orders = ({ orders, handleDoneOrders, show }:{ orders:IOrder[], handleDone
            .reverse()
            .map((item: IOrder) => {
               return ( 
-                  <ul key={`order${item._id}`} className={AppCss.card} style={{border:`2px solid ${show ? '#188d20' : '#f94144'}`}}>
+                  <ul key={`order${item._id}`} 
+                     className={AppCss.card} 
+                     style={{border:`2px solid ${show ? '#188d20' : '#f94144'}`
+                  }}>
                      <li className={AppCss.cardSpan}>
                         <span>{item.refNumber}</span><span>{formatDate(item.date)}</span>
                      </li>
@@ -29,7 +31,7 @@ const Orders = ({ orders, handleDoneOrders, show }:{ orders:IOrder[], handleDone
                      <li className={AppCss.cardTitle}>
                         <span>Amount ${getTotalPrice(item.card)}</span>
                      </li>
-               { orderDetail &&
+                 {orderDetail &&
                  currentId === item._id 
                  && item.card.map((el:ICard) => {
                   return (
